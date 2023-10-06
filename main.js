@@ -5,7 +5,7 @@ const path = require("node:path");
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
-    height: 600,
+    height: 800,
     resizable: false,
     webPreferences: {
       nodeIntegration: true,
@@ -47,4 +47,4 @@ app.whenReady().then(() => {
 //   require("electron-reloader")(module);
 // } catch (_) {}
 
-// electron-packager "D:\99_Personal\convert-tool\data" convert-tool --platform=win32 --arch=x86_64
+// electron-packager "C:\Web Developer\Side Project\convert-tool" convert-tool --platform=win32 --arch=x64

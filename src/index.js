@@ -5,9 +5,10 @@ const btnOutput = document.querySelector("button#output");
 const outputFolder = document.querySelector("input#output");
 const inputHulf = document.querySelector("input#HULFT_ID");
 const date = document.querySelector("input#reference-date");
-const SHEET_NAME_READER = "案件追加項目";
+const SHEET_NAME_READER = "output";
 const progress = document.querySelector(".meter>span");
 const excelFile = document.querySelector("input#formFile");
+const range = document.querySelector("input#range");
 
 let counter = 1;
 
@@ -23,11 +24,26 @@ const onRead = (filename, content, length) => {
 
   console.log(content);
 
-  const exportData = content.map((row) => {
-    return '"' + row.join('","') + '"';
+  if (content.length === 0) {
+    alert('File trống hoặc không tồn tại sheet "output"');
+    return;
+  }
+
+  const escapeData = content.map((row) => {
+    const escapeRow = row.map((item) => {
+      let cell = item;
+      if (cell) {
+        cell = item.replace(/"/g, '""');
+        // .repalce(/\\/g, '\\\\')
+      }
+
+      return cell;
+    });
+
+    return '"' + escapeRow.join('","') + '"';
   });
 
-  window.myAPI.exportFile(fileName, exportData.join("\r\n"), onError);
+  window.myAPI.exportFile(fileName, escapeData.join("\r\n"), onError);
   progress.className = "w-" + Math.round((counter++ * 100) / length);
 };
 
@@ -53,8 +69,8 @@ btnRender.addEventListener("click", () => {
   const reader = new FileReader();
   reader.onload = (e) => {
     const fileData = e.target?.result;
-
-    window.myAPI.convertFile(fileData, SHEET_NAME_READER, onRead, onError);
+    const rangeConvert = range.value || undefined;
+    window.myAPI.convertFile(fileData, SHEET_NAME_READER, rangeConvert, onRead, onError);
   };
 
   if (excelFile.files && excelFile.files.length) {
@@ -66,4 +82,3 @@ btnRender.addEventListener("click", () => {
 
   // window.myAPI.readFiles(folderName.value, SHEET_NAME_READER, onRead, onError);
 });
-

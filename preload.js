@@ -50,14 +50,14 @@ const exportFile = (fileName, data, onError) => {
   fs.writeFileSync(fileName, buffer, onError);
 };
 
-const convertFile = (fileData, sheetName, onResolve, onReject) => {
+const convertFile = (fileData, sheetName, range, onResolve, onReject) => {
   try {
     const data = XLSX.read(fileData, { type: "binary" });
     const result = XLSX.utils.sheet_to_json(data.Sheets[sheetName], {
       header: 1,
       blankrows: false,
       skipHidden: true,
-      range: "A4:AA1000",
+      range,
     });
     onResolve("", result, 1);
   } catch (e) {
