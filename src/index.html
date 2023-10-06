@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <link rel="stylesheet" href="./index.css">
+  <title>Convert Tool</title>
+</head>
+
+<body>
+  <h2>Convert Tool</h2>
+  <div class="mb-3">
+    <label for="formFile" class="form-label">
+      Chọn file excel cần convert
+    </label>
+    <input class="form-control" type="file" id="formFile"
+      accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, application/vnd.ms-excel.sheet.macroEnabled.12" />
+  </div>
+  <div class="mb-3">
+    <label for="dir" class="form-label">
+      Thư mục xuất file CSV
+    </label>
+    <div class="group-input">
+      <input type="text" class="form-control" id="output" placeholder="C:\Users\nguyenhoanganh\output\" />
+      <button type="button" id="output" class="btn btn-primary">Select folder</button>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="HULFT_ID" class="form-label">
+      HULFT_ID
+    </label>
+    <input class="form-control" type="text" id="HULFT_ID"></input>
+  </div>
+  <div class="mb-3">
+    <label for="reference-date" class="form-label">
+      基準日
+    </label>
+    <input class="form-control" type="date" id="reference-date"></input>
+  </div>
+
+  <div class="button-container">
+    <button type="button" id="render" class="btn btn-primary mb-3">Convert excel</button>
+  </div>
+
+  <div class="meter">
+    <span class="w-0"><span class="progress"></span></span>
+  </div>
+</body>
+<script src="index.js"></script>
+
+</html>
