@@ -29,6 +29,10 @@ const createWindow = () => {
       return filePaths[0];
     }
   });
+
+  ipcMain.handle("dialog:showMessageBoxSync", async (_, type, message) => {
+    await dialog.showMessageBox(win, { type, message });
+  });
 };
 
 app.on("window-all-closed", () => {

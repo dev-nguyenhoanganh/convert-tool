@@ -14,7 +14,7 @@ let counter = 1;
 
 const onError = (error) => {
   if (error) {
-    alert(error.message);
+    window.myAPI.openDialog("error", error.message);
   }
 };
 
@@ -22,17 +22,16 @@ const onRead = (filename, content, length) => {
   const fileName =
     outputFolder.value + inputHulf.value + "_" + window.myAPI.fDate(date.value) + ".csv";
 
-  console.log(content);
-
   if (content.length === 0) {
-    alert('File trống hoặc không tồn tại sheet "output"');
+    window.myAPI.openDialog("error", 'File trống hoặc không tồn tại sheet "output"');
+
     return;
   }
 
   const escapeData = content.map((row) => {
     const escapeRow = row.map((item) => {
       let cell = item;
-      if (cell) {
+      if (cell && typeof cell === "string") {
         cell = item.replace(/"/g, '""');
         // .repalce(/\\/g, '\\\\')
       }
@@ -45,6 +44,7 @@ const onRead = (filename, content, length) => {
 
   window.myAPI.exportFile(fileName, escapeData.join("\r\n"), onError);
   progress.className = "w-" + Math.round((counter++ * 100) / length);
+  window.myAPI.openDialog("info", "Xuất file thành công");
 };
 
 // btnSelectDir.addEventListener("click", () => {
@@ -77,7 +77,7 @@ btnRender.addEventListener("click", () => {
     const file = excelFile.files[0];
     reader.readAsBinaryString(file);
   } else {
-    alert("Vui lòng chọn file");
+    window.myAPI.openDialog("error", "Vui lòng chọn file");
   }
 
   // window.myAPI.readFiles(folderName.value, SHEET_NAME_READER, onRead, onError);

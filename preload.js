@@ -82,4 +82,6 @@ contextBridge.exposeInMainWorld("myAPI", {
   exportFile,
   convertFile,
   fDate,
+  openDialog: (type, message) =>
+    ipcRenderer.invoke("dialog:showMessageBoxSync", type, message),
 });
