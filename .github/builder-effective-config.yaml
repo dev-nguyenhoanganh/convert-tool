@@ -1,0 +1,52 @@
+directories:
+  output: dist/artifacts/local
+  buildResources: installer/resources
+appId: convert-tool
+productName: Convert excel to CSV
+copyright: Copyright © 2023 Luvina software
+win:
+  publisherName: Convert excel to CSV
+  publish:
+    - github
+  target: nsis
+dmg:
+  icon: images/csv.png
+  background: images/csv.png
+  iconSize: 100
+  contents:
+    - x: 255
+      'y': 85
+      type: file
+    - x: 253
+      'y': 325
+      type: link
+      path: /Applications
+  window:
+    width: 500
+    height: 500
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: true
+  include: installer/win/nsis-installer.nsh
+protocols:
+  name: Convert excel to CSV
+  schemes:
+    - deeplink
+compression: normal
+removePackageScripts: true
+nodeGypRebuild: false
+buildDependenciesFromSource: false
+files:
+  - filter:
+      - out
+deb:
+  priority: optional
+  afterInstall: installer/linux/after-install.tpl
+rpm:
+  fpm:
+    - '--before-install'
+    - installer/linux/before-install.tpl
+  afterInstall: installer/linux/after-install.tpl
+electronVersion: 26.3.0
